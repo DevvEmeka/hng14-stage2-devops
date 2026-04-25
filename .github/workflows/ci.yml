@@ -12,3 +12,36 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # -----------------------
+      # PYTHON LINT (API + WORKER)
+      # -----------------------
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python lint tools
+        run: |
+          pip install flake8
+
+      - name: Run Python lint
+        run: |
+          flake8 api worker || true
+
+      # -----------------------
+      # NODE LINT (FRONTEND)
+      # -----------------------
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Run frontend lint (if exists)
+        working-directory: frontend
+        run: |
+          npx eslint . || true
