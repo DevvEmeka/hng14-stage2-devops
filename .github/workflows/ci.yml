@@ -1,20 +1,19 @@
-  test:
+  build:
     runs-on: ubuntu-latest
-    needs: lint
+    needs: test
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
+      - name: Build API image
         run: |
-          pip install pytest httpx fastapi uvicorn
+          docker build -t api:${{ github.sha }} -t api:latest ./api
 
-      - name: Run tests
+      - name: Build Worker image
         run: |
-          pytest
+          docker build -t worker:${{ github.sha }} -t worker:latest ./worker
+
+      - name: Build Frontend image
+        run: |
+          docker build -t frontend:${{ github.sha }} -t frontend:latest ./frontend
