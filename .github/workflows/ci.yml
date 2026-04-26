@@ -35,8 +35,10 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install test tools
-        run: pip install pytest
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          pip install fastapi uvicorn redis httpx
 
       - name: Run tests
         run: pytest
