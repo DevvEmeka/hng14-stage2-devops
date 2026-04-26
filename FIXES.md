@@ -71,3 +71,8 @@ Fix: Removed Redis port exposure, added healthchecks, internal network, env vars
 File: .gitignore
 Problem: Temporary files and secrets risked being committed.
 Fix: Added Python cache, node_modules, .env, dist, and pytest cache exclusions.
+
+## Bug 11
+File: CI/CD pipeline
+Problem: Repository had no automated validation or deployment workflow.
+Fix: Added GitHub Actions pipeline with lint, test, build, integration test, and deploy stages.

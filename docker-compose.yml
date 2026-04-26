@@ -9,11 +9,6 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 256M
 
   api:
     build: ./api
@@ -32,11 +27,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 256M
 
   worker:
     build: ./worker
@@ -53,11 +43,6 @@ services:
       interval: 15s
       timeout: 5s
       retries: 5
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 256M
 
   frontend:
     build: ./frontend
@@ -70,15 +55,10 @@ services:
     networks:
       - appnet
     healthcheck:
-      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(()=>process.exit(0)).catch(()=>process.exit(1))"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
       interval: 10s
       timeout: 5s
       retries: 10
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 256M
 
 networks:
   appnet:

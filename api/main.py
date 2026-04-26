@@ -21,7 +21,7 @@ def health():
     try:
         r.ping()
         return {"message": "healthy"}
-    except:
+    except Exception:
         return {"message": "unhealthy"}
 
 
