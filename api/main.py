@@ -10,7 +10,6 @@ REDIS_HOST = os.getenv("REDIS_HOST", "redis")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
 
 
-# 👉 safer Redis connection (waits until Redis is ready)
 def get_redis():
     for i in range(10):
         try:
@@ -28,9 +27,6 @@ def get_redis():
     raise Exception("Could not connect to Redis")
 
 
-r = get_redis()
-
-
 @app.get("/")
 def root():
     return {"message": "API is running"}
@@ -39,6 +35,7 @@ def root():
 @app.get("/health")
 def health():
     try:
+        r = get_redis()  # ✅ moved here
         r.ping()
         return {"message": "healthy"}
     except Exception:
@@ -47,6 +44,7 @@ def health():
 
 @app.post("/jobs")
 def create_job():
+    r = get_redis()  # ✅ moved here
     job_id = str(uuid.uuid4())
     r.lpush("job", job_id)
     r.hset(f"job:{job_id}", "status", "queued")
@@ -55,6 +53,7 @@ def create_job():
 
 @app.get("/jobs/{job_id}")
 def get_job(job_id: str):
+    r = get_redis()  # ✅ moved here
     status = r.hget(f"job:{job_id}", "status")
 
     if not status:
