@@ -76,3 +76,8 @@ Fix: Added Python cache, node_modules, .env, dist, and pytest cache exclusions.
 File: CI/CD pipeline
 Problem: Repository had no automated validation or deployment workflow.
 Fix: Added GitHub Actions pipeline with lint, test, build, integration test, and deploy stages.
+
+## Bug 12
+File: api/main.py, worker/worker.py
+Problem: CI pipeline failed due to flake8 linting errors (bare except, missing blank lines, and missing newline at end of file).
+Fix: Replaced bare except with Exception handling, corrected PEP8 spacing (blank lines between functions and classes), and added missing newline at end of files.
