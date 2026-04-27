@@ -129,10 +129,10 @@ jobs:
      - name: Run Trivy scan
        uses: aquasecurity/trivy-action@master
        with:
-       image-ref: hng14-stage2-devops-api:latest
-        format: table
-        exit-code: 1
-        severity: CRITICAL
+         image-ref: hng14-stage2-devops-api:latest
+         format: table
+         exit-code: 1
+         severity: CRITICAL
 
   integration:
     runs-on: ubuntu-latest
